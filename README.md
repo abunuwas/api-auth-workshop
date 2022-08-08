@@ -52,3 +52,7 @@ Microservice APIs.
 
 Enter your details [here](https://woorise.com/miocroapis/microservice-apis-ebook-sqla)
 to participate in the raffle.
+
+## Database models diagram
+
+![database models diagram](models_diagram.png)
