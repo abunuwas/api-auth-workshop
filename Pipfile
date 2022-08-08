@@ -6,8 +6,13 @@ name = "pypi"
 [packages]
 fastapi = "*"
 uvicorn = "*"
+sqlalchemy = "*"
 
 [dev-packages]
+alembic = "*"
+snakeviz = "*"
+tuna = "*"
+faker = "*"
 
 [requires]
 python_version = "3.10"
