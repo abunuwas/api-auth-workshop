@@ -1,8 +1,8 @@
 # Building API applications with FastAPI [Workshop]
 
-Code for the workshop Building API applications with FastAPI.
+Code for the workshop Working with SQLAlchemy and Alembic.
 
-In this workshop, we learn to build a job portal API using FatsAPI.
+In this workshop, we add the database layer for the Job Portal API.
 
 ## Instructor: Jose Haro Peralta
 
@@ -12,36 +12,43 @@ In this workshop, we learn to build a job portal API using FatsAPI.
 
 ### Author of [Microservice APIs](https://www.manning.com/books/microservice-apis)
 
-## What is FastAPI?
-FastAPI is a high-performant REST API framework for Python. 
-It's built on top of [Starlette](https://www.starlette.io/)
-and it uses [Pydantic](https://pydantic-docs.helpmanual.io/) 
-for data validation. It can generate [OpenAPI](https://www.openapis.org/) 
-documentation from your code and also produces a [Swagger UI](https://editor.swagger.io/) 
-that you can use to test your application.
 
-Check out FastAPI's GitHub [repository](https://fastapi.tiangolo.com/)
-and give it a star! Also make sure to check out its excellent [documentation](https://fastapi.tiangolo.com/)
-online.
+## What are SQLAlchemy and Alembic?
+
+**SQLAlchemy** is Python's most popular Object Relational Mapper (ORM). 
+ORMs are frameworks that offer an object-oriented interface to your 
+database tables. ORMs give you a layer of abstraction on top of SQL, 
+so you don't have to write SQL queries by hand - instead, you just write
+code. ORMs also abstract away the differences between SQL engines, such
+as PostgreSQL and MySQL, so you can switch between one and the other 
+without having to change your code. You can learn more about SQLAlchemy
+with its official documentation: https://www.sqlalchemy.org/.
+
+**Alembic** is a database migrations management framework. Alembic ensures
+that your database schemas accurately reflect the data models that you 
+define with SQLAlchemy. You can learn more about Alembic with its official
+documentation: https://alembic.sqlalchemy.org/en/latest/.
 
 ## Agenda for the workshop
 
-1. Understand API implementation requirements from API specification.
-   All the APIs' specifications are available under the [oas](https://github.com/abunuwas/fastapi-workshop/tree/master/oas)
-   folder in this GitHub repository. Check out the [Jobs API](https://algorizm.stoplight.io/docs/fastapi-tutorial/f0da51f3c4043-py-jobs-api).
+1. Understand API implementation requirements for our [database models](models_diagram.png)
 2. Set up the environment and install dependencies.
-3. Project layout and create FastAPI object.
-4. Add routes and return a hardcoded payload.
-5. Add response validation models.
-6. Add request validation models and URL path parameters.
-7. Add URL query parameters.
-8. Test with Swagger UI.
-9. Deploy to Heroku.
+3. Initialise and configure Alembic.
+4. Add SQLAlchemy models.
+   1. Basic models
+   2. Relationships
+   3. Constraints
+5. Generate and apply migrations.
+6. Learn about batch operations in Alembic.
+7. Learn to perform queries and writes.
+8. Add database operations to API.
+9. Dataclasses for SQLAlchemy models.
+10. Asynchronous SQLAlchemy.
 
 ## Free ebook copy of Microservice APIs raffle
 
 At the end of the workshop, I'll raffle a free ebook copy of my book 
 Microservice APIs.
 
-Enter your details [here](https://woorise.com/miocroapis/microservice-apis-ebook)
+Enter your details [here](https://woorise.com/miocroapis/microservice-apis-ebook-sqla)
 to participate in the raffle.
