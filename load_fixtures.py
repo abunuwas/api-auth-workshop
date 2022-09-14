@@ -5,64 +5,95 @@ from faker import Faker
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from pyjobs.models.models import Candidate, Hirer, Job, JobApplication, Recruiter, Location, Skill, Currency
+from pyjobs.models.models import Candidate, Hirer, Job, Recruiter, Location, Skill
 
 fake = Faker()
 
 
-def load_fixtures():
-    session_maker = sessionmaker(bind=create_engine("sqlite:///database.db"))
+def load_skills(session):
+    skills = [
+        "Python",
+        "JavaScript",
+        "Node.js",
+        "Vue.js",
+        "Java",
+        "Erlang",
+        "Docker",
+        "PostgreSQL",
+        "MongoDB",
+        "AWS",
+        "Azure",
+        "GCP",
+        "Django",
+        "Flask",
+        "FastAPI",
+        "SQLAlchemy",
+    ]
+    skills = [Skill(name=skill) for skill in skills]
 
-    location = Location(city="London", country="UK")
-    skills = [Skill(name=skill) for skill in ["FastAPI", "Python", "Docker"]]
-    currency = Currency(name="US Dollar (USD)", symbol="$")
-    hirer = Hirer(name="PyJobs.works")
-    recruiter = Recruiter(first_name="Joe", last_name="Wow", email="joe@pyjobs.works")
-    jobs = []
-    for i in range(500):
-        rate = fake.random_int()
-        jobs.append(Job(
+    for skill in skills:
+        session.add(skill)
+
+    return skills
+
+
+def load_jobs(skills, session):
+    for _ in range(500):
+        rate = random.randint(500, 5000)
+        job = Job(
             title=fake.job(),
             rate=rate,
             rate_per_time_unit="hour",
             rate_annualized=rate * 8 * 255,
             contract_type=random.choice(["contract", "permanent"]),
+            location_id=1,
+            hirer_id=1,
+            recruiter_id=1,
             description="Being a cool Python tech lead",
-            live_until=datetime.utcnow() + timedelta(days=30),
-            skills=skills,
-        ))
-    candidate = Candidate(
-        first_name="Wow",
-        last_name="Whew",
+            live_until=datetime.utcnow() + timedelta(days=random.randint(10, 60)),
+            skills=[skills[random.randint(0, 15)] for _ in range(5)],
+        )
+
+        session.add(job)
+
+
+def load_candidates(skills, session):
+    candidate1 = Candidate(
+        name="Wow Whew",
         email="wow.whew@gmail.com",
-        skills=skills,
+        location_id=1,
+        skills=[skills[random.randint(0, 15)] for _ in range(5)],
+    )
+    candidate2 = Candidate(
+        name="Joe Whey",
+        email="joe.whew@gmail.com",
+        location_id=1,
+        skills=[skills[random.randint(0, 15)] for _ in range(5)],
     )
 
-    with session_maker() as session:
+    session.add(candidate1)
+    session.add(candidate2)
+
+
+def load_fixtures():
+    session_maker = sessionmaker(bind=create_engine("sqlite:///database.db"))
+    location = Location(city="London", country="UK")
+    hirer = Hirer(name="PyJobs.works")
+    recruiter = Recruiter(name="Joe Wow", email="joe@pyjobs.works")
+
+    with session_maker(expire_on_commit=False) as session:
+        skills = load_skills(session)
+
         session.add(location)
-        for skill in skills:
-            session.add(skill)
-        session.add(currency)
         session.add(hirer)
 
         recruiter.hirer = hirer
         session.add(recruiter)
 
-        for job in jobs:
-            job.rate_currency = currency
-            job.location = location
-            job.hirer = hirer
-            job.recruiter = recruiter
-            session.add(job)
+        session.commit()
 
-        candidate.location = location
-        session.add(candidate)
-
-        for job in jobs:
-            job_application = JobApplication()
-            job_application.candidate = candidate
-            job_application.job_listing = job
-            session.add(job_application)
+        load_candidates(skills, session)
+        load_jobs(skills, session)
 
         session.commit()
 
