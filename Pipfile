@@ -7,6 +7,9 @@ name = "pypi"
 fastapi = "*"
 uvicorn = "*"
 sqlalchemy = "*"
+pyjwt = "*"
+python-jose = "*"
+jwcrypto = "*"
 
 [dev-packages]
 alembic = "*"
