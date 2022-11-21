@@ -10,6 +10,7 @@ sqlalchemy = "*"
 pyjwt = "*"
 python-jose = "*"
 jwcrypto = "*"
+requests = "*"
 
 [dev-packages]
 alembic = "*"
