@@ -8,8 +8,8 @@ from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoin
 from starlette.requests import Request
 from starlette.responses import Response, JSONResponse
 
-from jwt_validator_jose import validate_token
 from pyjobs.web.api.api import router as jobs_router
+from pyjobs.web.auth import validate_token
 
 server = FastAPI(debug=True)
 
@@ -51,7 +51,7 @@ class AuthorizeRequestMiddleware(BaseHTTPMiddleware):
                 content={"detail": str(error), "body": str(error)}
             )
         else:
-            request.state.user_id = token_payload["sub"]
+            request.state.user_id = int(token_payload["sub"])
         return await call_next(request)
 
 
