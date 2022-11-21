@@ -12,7 +12,7 @@ now = datetime.now(timezone.utc)
 
 payload = {
     "iss": "https://auth.pyjobs.works",
-    "sub": "23456543",
+    "sub": "1",
     "aud": "https://pyjobs.works/jobs",
     "iat": now.timestamp(),
     "exp": (now + timedelta(hours=1)).timestamp()
