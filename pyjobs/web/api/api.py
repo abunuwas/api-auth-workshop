@@ -227,7 +227,7 @@ async def delete_job(job_id: uuid.UUID):
             )
         session.delete(job)
         session.commit()
-        return job.dict()
+        return
 
 
 @router.post("/jobs/{job_id}/cancel", response_model=GetJobSchema, status_code=status.HTTP_201_CREATED)
